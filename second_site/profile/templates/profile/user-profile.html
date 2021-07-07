@@ -1,0 +1,16 @@
+{% extends 'first_app/base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <h1>Добро пожаловать {{ user.first_name }}</h1>
+    <form method ="post">
+        {% csrf_token %}
+        {{ user.first_name }}<br>
+        {{ user.last_name }}<br>
+        <button type="submit" class="btn btn-success">Добавить</button>
+        <span>{{ err }}</span>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "first_app/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <h1>Создайте свой аккаунт</h1>
+    <p>Пожалуйста,зполните форму ниже</p>
+    <form action="." method="post">
+        {{ user_form|crispy }}
+        {% csrf_token %}
+        <p><input type="submit" value="Создать аккаунт"></p>
+    </form>
+{% endblock %}
