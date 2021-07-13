@@ -4,13 +4,19 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Добро пожаловать {{ user.first_name }}</h1>
+    {% if user.is_authenticated %}
+    <h1>Добро пожаловать ,{{ user.first_name }}</h1>
+
+
+    <h3>Должность : {{ user.profile.worker_type }}</h3>
+    <h3>Взято заданий : {{ user.profile.taked_tasks}}</h3>
     <form method ="post">
         {% csrf_token %}
-        {{ user.first_name }}<br>
-        {{ user.last_name }}<br>
         <button type="submit" class="btn btn-success">Добавить</button>
         <span>{{ err }}</span>
     </form>
+    {% else %}
+     <h2>Прожалуйста залогинтесь</h2>
+    {% endif %}
 
 {% endblock %}

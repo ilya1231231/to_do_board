@@ -1,6 +1,6 @@
 from django.urls import path
 #from .views import ProfileCreateView
-from .views import Test
+from .views import test
 
 
 #app_name = 'profile'
@@ -8,6 +8,6 @@ from .views import Test
 urlpatterns = [
     #path('create/', ProfileCreateView.as_view()),
     #path('userprofile/', profile, name='profile'),
-    path('test/<str:pk>/', Test)
+    path('profile-board/', test, name='profiles')
 
 ]

@@ -10,6 +10,9 @@ class Profile(models.Model):
     avatar = models.ImageField('Аватар', upload_to='profile/', blank=True, null=True)
     first_name = models.CharField('Имя', max_length=50)
     second_name = models.CharField('Фамилия', max_length=50)
+    worker_type = models.CharField('Должность', max_length=50, default='NULL')
+    taked_tasks = models.PositiveIntegerField('Взято заданий', default=0)
+
 
 
     def __str__(self):

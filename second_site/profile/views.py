@@ -17,12 +17,12 @@ from django.contrib.auth.models import User
 # return render(request, 'profile/user-profile.html')
 
 
-def Test(request, pk):
+def test(request):     # username):
+    #users = User.objects.filter(username=pk)
+    #u = User.objects.get(username=username)
+    #show = Profile.objects.all()
+    #url = reverse('profile/user-profile.html', kwargs={'username': u})
 
-    print(pk)
+    #print(Profile.objects.filter(user=users[0].id)[0])
 
-    users = User.objects.filter(username=pk)
-    print(users[0].username)
-    print(Profile.objects.filter(user=users[0].id)[0])
-
-    return render(request, 'profile/user-profile.html')
+    return render(request, 'profile/user-profile.html') #username)
