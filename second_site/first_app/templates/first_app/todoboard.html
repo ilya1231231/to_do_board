@@ -13,6 +13,9 @@
                 <p>{{ i.task }}</p>
 
             </div>
+            <form action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
+            <input type="submit" value="Взять задание">
+</form>
         {% endfor %}
     {% else %}
         <div class="alert alert-warning mt-3">

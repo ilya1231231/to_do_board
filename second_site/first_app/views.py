@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 # Create your views here.
 from .models import Task
@@ -38,6 +39,12 @@ def create(request):
 def show_board(request):
     tasks = Task.objects.all()  # функция для главной страницы показать сообщение
     return render(request, 'first_app/todoboard.html',{'tasks': tasks})
+
+
+def deleteTodoView(request, i):
+    y = Task.objects.get(id= i)
+    return render(request, 'profile/user-profile.html', {'y': y})
+
 
 
 
