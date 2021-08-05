@@ -11,10 +11,11 @@
             <div class="alert alert-success mt-3">
                 <h3>{{ i.title }}</h3>
                 <p>{{ i.task }}</p>
-                <form action="/take/{{i.id}}/" method = "post">{% csrf_token %}
-                    <input type="submit" value="Взять задание">
-                </form>
+
             </div>
+            <form action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
+            <input type="submit" value="Взять задание">
+</form>
         {% endfor %}
     {% else %}
         <div class="alert alert-warning mt-3">

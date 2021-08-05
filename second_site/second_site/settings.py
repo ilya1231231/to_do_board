@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'first_app',
     'account',
     'crispy_forms',
+    'profile',
     'rest_framework',
 ]
 
@@ -43,7 +44,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'second_site2.urls'
+ROOT_URLCONF = 'second_site.urls'
 
 TEMPLATES = [
     {
@@ -61,7 +62,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'second_site2.wsgi.application'
+WSGI_APPLICATION = 'second_site.wsgi.application'
 
 
 # Database
