@@ -10,20 +10,22 @@
 
     <h3>Должность : {{ user.profile.worker_type }}</h3>
     <h3>Взято заданий : {{ user.profile.taked_tasks}}</h3>
-    <form method ="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success">Добавить</button>
-
+    {% if user.profile.user_task_title %}
+        {% for item in user.profile.user_task_title.all %}
         <div class="alert alert-success mt-3">
-                <h3>{{ y }}</h3>
-                <p>{{ y }}</p>
-                <h3>{{ y }}</h3>
-                <p>{{ y }}</p>
-                <h3>{{ y }}</h3>
-                <p>{{ y }}</p>
+            <h3>{{ item.usr_title }}</h3>
+            <p>{{ item.usr_task }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3>У вас нет записей</h3>
+    {% endif %}
 
 
-            </div>
+
+
+
+
         <span>{{ err }}</span>
     </form>
     {% else %}
