@@ -45,8 +45,7 @@ def show_board(request):
 def take_todo_item(request, i):
 
     title = Task.objects.get(id=i)
-    task= Task.objects.get(id=i).task
-    person = Task.objects.all()
+    task = Task.objects.get(id=i).task
     user_profile = Profile.objects.get(
         user=request.user
     )
@@ -55,11 +54,10 @@ def take_todo_item(request, i):
     )
     if created:
         user_profile.u_individual_task.add(takedtask)
+    
+    user_profile.save()
 
-    print(str(person))
-    print(str(name))
-
-    return HttpResponseRedirect('/todoboard/')
+    return HttpResponseRedirect('/profile-board/')
 
 
 

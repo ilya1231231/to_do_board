@@ -1,4 +1,9 @@
 from django.db import models
+from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.urls import reverse
 
 class Task(models.Model):
     title = models.CharField('Название', max_length=50)
@@ -11,12 +16,6 @@ class Task(models.Model):
     class Meta:
         verbose_name ='Задача'
         verbose_name_plural = 'Задачи'
-
-from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.urls import reverse
 
 
 class UTask(models.Model):
@@ -48,6 +47,12 @@ class Profile(models.Model):
     def __str__(self):
         return self.first_name
 
+    def save(self, *args, **kwargs):
+        '''Обращаемся к продуктам,находящимся в этой корзине и считаем общую сумму и кол-во товара по id '''
+        profile_data = self.u_individual_task.aggregate(models.Count('id'))      #aggreagte sql function
+        self.taked_tasks_qty = profile_data['id__count']
+        print(profile_data)
+        super().save(*args, **kwargs)
 
     #def save(self, *args, **kwargs):
        # super().save(*args, **kwargs)
