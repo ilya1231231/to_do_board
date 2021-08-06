@@ -48,8 +48,7 @@ class Profile(models.Model):
         return self.first_name
 
     def save(self, *args, **kwargs):
-        '''Обращаемся к продуктам,находящимся в этой корзине и считаем общую сумму и кол-во товара по id '''
-        profile_data = self.u_individual_task.aggregate(models.Count('id'))      #aggreagte sql function
+        profile_data = self.u_individual_task.aggregate(models.Count('id'))  
         self.taked_tasks_qty = profile_data['id__count']
         print(profile_data)
         super().save(*args, **kwargs)

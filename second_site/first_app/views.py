@@ -54,7 +54,7 @@ def take_todo_item(request, i):
     )
     if created:
         user_profile.u_individual_task.add(takedtask)
-    
+
     user_profile.save()
 
     return HttpResponseRedirect('/profile-board/')
