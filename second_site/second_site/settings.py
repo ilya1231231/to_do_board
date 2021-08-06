@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     'first_app',
     'account',
     'crispy_forms',
-    'profile',
     'rest_framework',
 ]
 

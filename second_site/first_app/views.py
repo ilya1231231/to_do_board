@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 # Create your views here.
-from .models import Task
+from .models import Task, Profile, UTask
+
 
 from .forms import TaskForm
 from .forms import UserRegistrationForm
@@ -41,11 +42,37 @@ def show_board(request):
     return render(request, 'first_app/todoboard.html',{'tasks': tasks})
 
 
-def deleteTodoView(request, i):
-    y = Task.objects.get(id= i)
-    return render(request, 'profile/user-profile.html', {'y': y})
+def take_todo_item(request, i):
+
+    title = Task.objects.get(id=i)
+    task= Task.objects.get(id=i).task
+    person = Task.objects.all()
+    user_profile = Profile.objects.get(
+        user=request.user
+    )
+    takedtask, created = UTask.objects.get_or_create(
+        u_title=title, u_task=task, object_id=i
+    )
+    if created:
+        user_profile.u_individual_task.add(takedtask)
+
+    print(str(person))
+    print(str(name))
+
+    return HttpResponseRedirect('/todoboard/')
 
 
+
+
+def test(request):     # username):
+    #users = User.objects.filter(username=pk)
+    #u = User.objects.get(username=username)
+    #show = Profile.objects.all()
+    #url = reverse('profile/user-profile.html', kwargs={'username': u})
+
+    #print(Profile.objects.filter(user=users[0].id)[0])
+
+    return render(request, 'first_app/user-profile.html')
 
 
 

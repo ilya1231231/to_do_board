@@ -13,17 +13,14 @@
     <form method ="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-success">Добавить</button>
-
+    {% for item in user.profile.u_individual_task.all %}
         <div class="alert alert-success mt-3">
-                <h3>{{ y }}</h3>
-                <p>{{ y }}</p>
-                <h3>{{ y }}</h3>
-                <p>{{ y }}</p>
-                <h3>{{ y }}</h3>
-                <p>{{ y }}</p>
 
+                <h3>{{ item.u_title }}</h3>
+                <p>{{ item.u_task }}</p>
 
-            </div>
+        </div>
+    {% endfor %}
         <span>{{ err }}</span>
     </form>
     {% else %}

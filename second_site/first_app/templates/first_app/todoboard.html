@@ -13,7 +13,7 @@
                 <p>{{ i.task }}</p>
 
             </div>
-            <form action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
+            <form action="/take_todo_item/{{i.id}}/" method = "post">{% csrf_token %}
             <input type="submit" value="Взять задание">
 </form>
         {% endfor %}
