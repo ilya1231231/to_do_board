@@ -4,16 +4,15 @@
 {% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-    <h1>Добро пожаловать ,{{ user.first_name }}</h1>
+<!--    {% if user.is_authenticated %}-->
+    <h1>Добро пожаловать ,{{ owner.profile.first_name }}</h1>
 
 
     <h3>Должность : {{ user.profile.worker_type }}</h3>
     <h3>Взято заданий : {{ user.profile.taked_tasks_qty }}</h3>
     <form method ="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-success">Добавить</button>
-    {% for item in user.profile.u_individual_task.all %}
+    {% for item in user_profile.u_individual_task.all %}
         <div class="alert alert-success mt-3">
 
                 <h3>{{ item.u_title }}</h3>
@@ -25,6 +24,6 @@
     </form>
     {% else %}
      <h2>Прожалуйста залогинтесь</h2>
-    {% endif %}
+<!--    {% endif %}-->
 
 {% endblock %}
