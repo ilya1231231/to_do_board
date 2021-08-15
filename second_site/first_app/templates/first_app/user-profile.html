@@ -26,10 +26,6 @@
 
                 <h3>{{ item.u_title }}</h3>
                 <p>{{ item.u_task }}</p>
-            <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                <i class="bi-cart-fill me-1"></i>
-                <a href="{% url 'delete_from_profile' i.id %}">Удалить задание</a>
-            </button>
 
         </div>
     {% endfor %}

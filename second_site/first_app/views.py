@@ -67,7 +67,7 @@ class TakeTodoItemView(ProfileMixin, View):
         # worker = Worker.objects.get(user=request.user)
         # user_profile = Profile.objects.get(owner=worker)
         takedtask, created = UTask.objects.get_or_create(
-            user=self.user_profile.owner, u_title=title, u_task=task
+                 u_title=title, u_task=task
         )
         if created:
             self.user_profile.u_individual_task.add(takedtask)
@@ -78,24 +78,24 @@ class TakeTodoItemView(ProfileMixin, View):
         return HttpResponseRedirect('/profile-board/')
 
 
-class DeleteTaskUserView(ProfileMixin, View):
-
-    def get(self, request, *args, **kwargs):
-        i = kwargs.get('i')
-        u_title = UTask.objects.get(id=i)
-        print(i)
-        worker = Worker.objects.get(user=request.user)
-        user_profile = Profile.objects.get(owner=worker)
-        takedtask, created = UTask.objects.get_(
-            u_title=title, u_task=task
-        )
-        # if created:
-        #     self.user_profile.u_individual_task.add(takedtask)
-        u_title.delete()
-        self.user_profile.save()
-        messages.add_message(request, messages.INFO, 'Вы успешно удалили задание')
-
-        return HttpResponseRedirect('/profile-board/')
+# class DeleteTaskUserView(ProfileMixin, View):
+#
+#     def get(self, request, *args, **kwargs):
+#         i = kwargs.get('i')
+#         u_title = UTask.objects.get(id=i)
+#         print(i)
+#         worker = Worker.objects.get(user=request.user)
+#         user_profile = Profile.objects.get(owner=worker)
+#         takedtask, created = UTask.objects.get_(
+#             u_title=title, u_task=task
+#         )
+#         # if created:
+#         #     self.user_profile.u_individual_task.add(takedtask)
+#         u_title.delete()
+#         self.user_profile.save()
+#         messages.add_message(request, messages.INFO, 'Вы успешно удалили задание')
+#
+#         return HttpResponseRedirect('/profile-board/')
 
 
 
