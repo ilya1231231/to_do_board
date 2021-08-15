@@ -1,0 +1,30 @@
+{% extends 'first_app/base.html' %}
+
+{% block title %}
+    Доступные задания
+{% endblock %}
+
+{% block content %}
+    <h1>Здравствуйте, {{ user.first_name }}</h1>
+    {% if tasks %}
+        {% for i in tasks %}
+            <div class="alert alert-success mt-3">
+                <h3>{{ i.title }}</h3>
+                <p>{{ i.task }}</p>
+
+                <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                <i class="bi-cart-fill me-1"></i>
+                <a href="{% url 'take' i.id %}">Взять задание</a>
+            </button>
+
+
+            </div>
+
+
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-warning mt-3">
+                <p>У вас нет записей</p>
+        </div>
+    {% endif %}
+{% endblock %}
