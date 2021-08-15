@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -39,10 +40,11 @@ def create(request):
     }
     return render(request, 'first_app/create.html', context)
 
+class ShowBoardView(ProfileMixin, View):
 
-def show_board(request):
-    tasks = Task.objects.all()  # функция для главной страницы показать сообщение
-    return render(request, 'first_app/todoboard.html',{'tasks': tasks})
+    def get(self, request, *args, **kwargs):
+        tasks = Task.objects.all()  # функция для главной страницы показать сообщение
+        return render(request, 'first_app/todoboard.html',{'tasks': tasks})
 
 
 class ProfileView(ProfileMixin, View):
@@ -55,7 +57,7 @@ class ProfileView(ProfileMixin, View):
         return render(request, 'first_app/user-profile.html', context)
 
 
-class TakeTodoItem(ProfileMixin, View):
+class TakeTodoItemView(ProfileMixin, View):
 
     def get(self, request, *args, **kwargs):
         i = kwargs.get('i')
@@ -65,14 +67,35 @@ class TakeTodoItem(ProfileMixin, View):
         # worker = Worker.objects.get(user=request.user)
         # user_profile = Profile.objects.get(owner=worker)
         takedtask, created = UTask.objects.get_or_create(
-            u_title=title, u_task=task
+            user=self.user_profile.owner, u_title=title, u_task=task
         )
         if created:
             self.user_profile.u_individual_task.add(takedtask)
+        title.delete()
         self.user_profile.save()
+        messages.add_message(request, messages.INFO, 'Вы успешно взяли задание')
 
         return HttpResponseRedirect('/profile-board/')
 
+
+class DeleteTaskUserView(ProfileMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        i = kwargs.get('i')
+        u_title = UTask.objects.get(id=i)
+        print(i)
+        worker = Worker.objects.get(user=request.user)
+        user_profile = Profile.objects.get(owner=worker)
+        takedtask, created = UTask.objects.get_(
+            u_title=title, u_task=task
+        )
+        # if created:
+        #     self.user_profile.u_individual_task.add(takedtask)
+        u_title.delete()
+        self.user_profile.save()
+        messages.add_message(request, messages.INFO, 'Вы успешно удалили задание')
+
+        return HttpResponseRedirect('/profile-board/')
 
 
 

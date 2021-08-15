@@ -4,6 +4,15 @@
 {% endblock %}
 
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{ message }}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+</ul>
+{% endif %}
 <!--    {% if user.is_authenticated %}-->
     <h1>Добро пожаловать ,{{ owner.profile.first_name }}</h1>
 
@@ -17,6 +26,10 @@
 
                 <h3>{{ item.u_title }}</h3>
                 <p>{{ item.u_task }}</p>
+            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                <i class="bi-cart-fill me-1"></i>
+                <a href="{% url 'delete_from_profile' i.id %}">Удалить задание</a>
+            </button>
 
         </div>
     {% endfor %}

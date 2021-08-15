@@ -32,9 +32,10 @@ class Task(models.Model):
 
 class UTask(models.Model):
     user = models.ForeignKey('Worker', null=True, verbose_name='Берущий задание', on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', null=True, verbose_name='Профиль', on_delete=models.CASCADE,related_name='related_profile')
     u_title = models.CharField('Название', max_length=50, null=True, blank=True)
     u_task = models.CharField('Описание', max_length=1024, null=True, blank=True )
-    object_id = models.PositiveIntegerField(default=0)
+    object_id = models.PositiveIntegerField()
 
 
     def __str__(self):
