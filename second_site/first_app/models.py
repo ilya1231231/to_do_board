@@ -36,6 +36,7 @@ class UTask(models.Model):
     u_task = models.CharField('Описание', max_length=1024, null=True, blank=True )
 
 
+
     def __str__(self):
         return str(self.u_title)
 
@@ -59,11 +60,11 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.id)
 
-    # def save(self, *args, **kwargs):
-    #     profile_data = self.u_individual_task.aggregate(models.Count('id'))
-    #     self.taked_tasks_qty = profile_data['id__count']
-    #     print(profile_data)
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        profile_data = self.u_individual_task.aggregate(models.Count('id'))
+        self.taked_tasks_qty = profile_data['id__count']
+        print(profile_data)
+        super().save(*args, **kwargs)
 
     #def save(self, *args, **kwargs):
        # super().save(*args, **kwargs)

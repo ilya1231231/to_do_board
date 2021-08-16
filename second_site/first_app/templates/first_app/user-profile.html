@@ -14,11 +14,11 @@
 </ul>
 {% endif %}
 <!--    {% if user.is_authenticated %}-->
-    <h1>Добро пожаловать ,{{ owner.profile.first_name }}</h1>
+    <h1>Добро пожаловать ,{{ user_profile.first_name }}</h1>
 
 
-    <h3>Должность : {{ user.profile.worker_type }}</h3>
-    <h3>Взято заданий : {{ user.profile.taked_tasks_qty }}</h3>
+    <h3>Должность : {{ user_profile.worker_type }}</h3>
+    <h3>Взято заданий : {{ user_profile.taked_tasks_qty }}</h3>
     <form method ="post">
         {% csrf_token %}
     {% for item in user_profile.u_individual_task.all %}
