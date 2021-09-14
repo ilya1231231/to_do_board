@@ -13,26 +13,27 @@
     {% endfor %}
 </ul>
 {% endif %}
-<!--    {% if user.is_authenticated %}-->
+
+{% if user.is_authenticated %}
     <h1>Добро пожаловать ,{{ user_profile.first_name }}</h1>
-
-
     <h3>Должность : {{ user_profile.worker_type }}</h3>
-    <h3>Взято заданий : {{ user_profile.taked_tasks_qty }}</h3>
+    <h3>Взято заданий : {{ user_profile.taked_tasks_qty}}</h3>
     <form method ="post">
         {% csrf_token %}
-    {% for item in user_profile.u_individual_task.all %}
+    {% for i in us_tasks %}
         <div class="alert alert-success mt-3">
-
-                <h3>{{ item.u_title }}</h3>
-                <p>{{ item.u_task }}</p>
-
+            <h3>{{ i.u_title }}</h3>
+            <p>{{ i.u_task }}</p>
+            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                <i class="bi-cart-fill me-1"></i>
+                <a href="{% url 'delete_from_profile' i.id %}">Задание выполнено</a>
+            </button>
         </div>
     {% endfor %}
         <span>{{ err }}</span>
     </form>
     {% else %}
      <h2>Прожалуйста залогинтесь</h2>
-<!--    {% endif %}-->
+{% endif %}
 
 {% endblock %}

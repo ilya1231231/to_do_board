@@ -7,6 +7,7 @@ from django.urls import reverse
 
 
 class Worker(models.Model):
+    ''' Модель работника'''
     user = models.ForeignKey(User, verbose_name='Работник', on_delete=models.CASCADE)
     first_name = models.CharField('Имя', max_length=50, blank=True, null=True)
     second_name = models.CharField('Фамилия', max_length=50, blank=True, null=True)
@@ -14,16 +15,17 @@ class Worker(models.Model):
     def __str__(self):
         return 'Работник: {} {}'.format(self.first_name, self.second_name)
 
+
 class Task(models.Model):
+    '''Модель задачи(от руководителя)'''
     title = models.CharField('Название', max_length=50)
     task = models.CharField('Описание', max_length=1024)
-
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name ='Задача'
+        verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
 
     # def get_model_name(self):
@@ -31,22 +33,22 @@ class Task(models.Model):
 
 
 class UTask(models.Model):
-    profile = models.ForeignKey('Profile', null=True, verbose_name='Профиль', on_delete=models.CASCADE,related_name='related_profile')
+    ''' Модель задачи для пользовательского профиля'''
+    profile = models.ForeignKey('Profile', null=True, verbose_name='Профиль', on_delete=models.CASCADE,
+                                related_name='related_profile')
     u_title = models.CharField('Название', max_length=50, null=True, blank=True)
-    u_task = models.CharField('Описание', max_length=1024, null=True, blank=True )
-
-
+    u_task = models.CharField('Описание', max_length=1024, null=True, blank=True)
 
     def __str__(self):
         return str(self.u_title)
 
-
     class Meta:
-        verbose_name ='Задача пользователя'
+        verbose_name = 'Задача пользователя'
         verbose_name_plural = 'Задачи пользователя'
 
 
 class Profile(models.Model):
+    '''Профиль пользователя'''
     owner = models.OneToOneField('Worker', null=True, verbose_name='Владелец профиля', on_delete=models.CASCADE)
     avatar = models.ImageField('Аватар', upload_to='profile/', blank=True, null=True)
     worker_type = models.CharField('Должность', max_length=50, default='NULL', blank=True, null=True)
@@ -55,27 +57,25 @@ class Profile(models.Model):
     taked_tasks_qty = models.PositiveIntegerField('Взято заданий', default=0, blank=True, null=True)
     u_individual_task = models.ManyToManyField(UTask, blank=True, related_name='related_utask')
 
-
-
     def __str__(self):
         return str(self.id)
 
+    '''Функия для изменения числа пользовательских задач'''
     def save(self, *args, **kwargs):
         profile_data = self.u_individual_task.aggregate(models.Count('id'))
         self.taked_tasks_qty = profile_data['id__count']
         print(profile_data)
         super().save(*args, **kwargs)
 
-    #def save(self, *args, **kwargs):
-       # super().save(*args, **kwargs)
-        #self.slug = '{}{}'.format(self.user_id, self.first_name)
+    # def save(self, *args, **kwargs):
+    # super().save(*args, **kwargs)
+    # self.slug = '{}{}'.format(self.user_id, self.first_name)
 
-    #def get_absolute_url(self):
-        #return reverse('profile-detail', kwargs={'name':self.user.username})
-
+    # def get_absolute_url(self):
+    # return reverse('profile-detail', kwargs={'name':self.user.username})
 
     class Meta:
-        verbose_name ='Профиль'
+        verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'
 
 
