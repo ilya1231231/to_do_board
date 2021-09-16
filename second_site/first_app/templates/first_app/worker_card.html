@@ -1,0 +1,21 @@
+{% extends 'first_app/base.html'%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h3>HELLO</h3>
+
+
+        {% for i in work_card.all %}
+            {{ i.first_name }}
+            {{ i.second_name }}
+        {% endfor %}
+
+    <form method="POST" action="{% url 'worker_card_add' %}" >
+        {{ form|crispy}}<br>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+
+
+{% endblock content %}

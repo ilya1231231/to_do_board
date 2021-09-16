@@ -8,7 +8,7 @@ from django.urls import reverse
 
 class Worker(models.Model):
     ''' Модель работника'''
-    user = models.ForeignKey(User, verbose_name='Работник', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, verbose_name='Работник', on_delete=models.CASCADE)
     first_name = models.CharField('Имя', max_length=50, blank=True, null=True)
     second_name = models.CharField('Фамилия', max_length=50, blank=True, null=True)
 
@@ -60,7 +60,8 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.id)
 
-    '''Функия для изменения числа пользовательских задач'''
+    '''Функция для изменения числа пользовательских задач'''
+
     def save(self, *args, **kwargs):
         profile_data = self.u_individual_task.aggregate(models.Count('id'))
         self.taked_tasks_qty = profile_data['id__count']

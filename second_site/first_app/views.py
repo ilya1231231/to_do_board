@@ -2,13 +2,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-# Create your views here.
 from .models import Task, Profile, UTask, Worker
 from django.views.generic import View
 from .mixins import ProfileMixin
+from .forms import TaskForm, WorkerCardForm
 
-from .forms import TaskForm
-from .forms import UserRegistrationForm
+
+# from .forms import UserRegistrationForm
 
 
 def index(request):
@@ -85,3 +85,33 @@ class DeleteTaskUserView(ProfileMixin, View):
 
         return HttpResponseRedirect('/profile-board/')
 
+
+class WorkerCardView(ProfileMixin, View):
+    def get(self, request, *args, **kwargs):
+        form = WorkerCardForm
+        work_card = Worker.objects.filter(user=request.user)
+        context = {
+            'work_card': work_card,
+            'form': form
+        }
+        current_user = request.user
+        print(current_user.id)
+        return render(request, 'first_app/worker_card.html', context)
+
+    def sample_view(self, request):
+        current_user = request.user
+        print(current_user.id)
+
+
+class WorkerCardAdd(ProfileMixin, View):
+    def post(self, request, *args, **kwargs):
+        form = WorkerCardForm(request.POST or None)
+        current_user = request.user
+        if form.is_valid():
+            work_card = form.save(commit=False)
+            work_card.user = request.user
+            work_card.save()
+
+            return HttpResponseRedirect('/')
+
+        return HttpResponseRedirect('/')

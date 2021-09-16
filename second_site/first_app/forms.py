@@ -1,9 +1,10 @@
-
-
-from .models import Task
+from .models import Task, Worker
 from django.forms import ModelForm, TextInput, Textarea
 from django.contrib.auth.models import User
 from django import forms
+
+
+# from django import forms
 
 class TaskForm(ModelForm):
     class Meta:
@@ -13,32 +14,15 @@ class TaskForm(ModelForm):
             'class': 'form-control',
             'placeholder': 'Введите название'
         }),
-        "task": Textarea(attrs={
-            'class': 'form-control',
-            'placeholder': 'Введите описание'
-        }),
+            "task": Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите описание'
+            }),
         }
 
 
-
-
-
-
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
-
+class WorkerCardForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('username', 'first_name', 'email')
-
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Passwords don\'t match.')
-        return cd['password2']
-
-
-
-
+        model = Worker
+        fields = ('first_name', 'second_name')
 

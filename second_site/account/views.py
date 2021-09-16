@@ -1,8 +1,8 @@
-
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm
+from .forms import LoginForm, UserRegistrationForm
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -13,7 +13,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'first_app/todoboard.html')
+                    return HttpResponseRedirect('/profile-board/')
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -22,8 +22,6 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'account/login.html', {'form': form})
 
-
-from .forms import LoginForm, UserRegistrationForm
 
 def register(request):
     if request.method == 'POST':

@@ -21,10 +21,14 @@
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
-    <autoscroll-to-editor value="false" />
+    <autoscroll-to-editor value="true" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
-    <loaded-nodes />
+    <show-object-properties value="false" />
+    <loaded-nodes>
+      <connection connection-id="849123c9-64d4-499d-bb91-4a172b206321">
+        <schema name="main" object-types="table, view, constraint, index, column, dataset trigger" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="849123c9-64d4-499d-bb91-4a172b206321">
@@ -36,6 +40,16 @@
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="849123c9-64d4-499d-bb91-4a172b206321" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.auth_user_user_permissions" active-filter-id="" />
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.first_app_utask" active-filter-id="" />
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.first_app_profile_u_individual_task" active-filter-id="" />
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.auth_group" active-filter-id="" />
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.first_app_profile" active-filter-id="" />
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.django_session" active-filter-id="" />
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.auth_permission" active-filter-id="" />
+    <filter-actions connection-id="849123c9-64d4-499d-bb91-4a172b206321" dataset="main.django_site" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -69,7 +83,7 @@
           <description value="" />
           <database-type value="SQLITE" />
           <config-type value="BASIC" />
-          <database-version value="9999.0" />
+          <database-version value="3.3" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
@@ -78,7 +92,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="sqlite.db" schema="main" />
+            <file path="C:\Users\Asus\Documents\GitHub\to_do_board\second_site\db.sqlite3" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

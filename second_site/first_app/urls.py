@@ -12,7 +12,9 @@ urlpatterns = [
     path('todoboard/', views.ShowBoardView.as_view(), name='todoboard'),
     path('take_todo_item/<int:i>/', views.TakeTodoItemView.as_view(), name='take'),
     path('delete_from_profile/<int:i>/', views.DeleteTaskUserView.as_view(), name='delete_from_profile'),
-    path('profile-board/', views.ProfileView.as_view(), name='profiles')
+    path('profile-board/', views.ProfileView.as_view(), name='profiles'),
+    path('worker-card/', views.WorkerCardView.as_view(), name='worker_card'),
+    path('worker-card-add/', views.WorkerCardAdd.as_view(), name='worker_card_add')
 
 
 ]
