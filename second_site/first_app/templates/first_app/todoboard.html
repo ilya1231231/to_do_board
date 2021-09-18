@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Здравствуйте, {{ user.first_name }}</h1>
+    <h1>Здравствуйте, {{ user_name.first_name }}</h1>
     {% if tasks %}
         {% for i in tasks %}
             <div class="alert alert-success mt-3">

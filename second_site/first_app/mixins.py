@@ -10,4 +10,5 @@ class ProfileMixin(View):
             user_profile = Profile.objects.filter(owner=worker).first()
         self.user_profile = user_profile
 
+
         return super().dispatch(request, *args, **kwargs)

@@ -42,7 +42,8 @@ class ShowBoardView(ProfileMixin, View):
 
     def get(self, request, *args, **kwargs):
         tasks = Task.objects.all()  # функция для главной страницы показать сообщение
-        return render(request, 'first_app/todoboard.html', {'tasks': tasks})
+        user_name = Worker.objects.get(user=request.user)
+        return render(request, 'first_app/todoboard.html', {'tasks': tasks,'user_name':user_name })
 
 
 class ProfileView(ProfileMixin, View):
@@ -63,11 +64,9 @@ class TakeTodoItemView(ProfileMixin, View):
         i = kwargs.get('i')
         title = Task.objects.get(id=i)
         task = Task.objects.get(id=i).task
-        takedtask, created = UTask.objects.get_or_create(
+        UTask.objects.create(
             profile=self.user_profile, u_title=title, u_task=task
         )
-        if created:
-            self.user_profile.u_individual_task.add(takedtask)
         title.delete()
         self.user_profile.save()
         messages.add_message(request, messages.INFO, 'Вы успешно взяли задание')

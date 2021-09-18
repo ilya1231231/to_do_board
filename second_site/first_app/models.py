@@ -4,13 +4,30 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Worker(models.Model):
+
+    EDUCATION_MIDDLE_ALL = 'Среднее общее'
+    EDUCATION_HIGH = 'Высшее'
+    EDUCATION_INCOMPLETE_HIGH = 'Неоконченное высшее'
+
+    EDUCATION_CHOICES = (
+        (EDUCATION_MIDDLE_ALL, 'Среднее общее'),
+        (EDUCATION_HIGH, 'Высшее'),
+        (EDUCATION_INCOMPLETE_HIGH, 'Неоконченное высшее'),
+    )
+
     ''' Модель работника'''
     user = models.OneToOneField(User, verbose_name='Работник', on_delete=models.CASCADE)
     first_name = models.CharField('Имя', max_length=50, blank=True, null=True)
     second_name = models.CharField('Фамилия', max_length=50, blank=True, null=True)
+    last_name = models.CharField('Отчество', max_length=100, blank=True, null=True)
+    birthday = models.DateTimeField(verbose_name='Дата рождения', default=timezone.now)
+    birthday_place = models.CharField('Место рождения', max_length=100, blank=True, null=True)
+    foreign_languages = models.CharField('Иностранные языки', max_length=1024, blank=True, null=True)
+    education = models.CharField('Образование', choices=EDUCATION_CHOICES, default=EDUCATION_INCOMPLETE_HIGH)
 
     def __str__(self):
         return 'Работник: {} {}'.format(self.first_name, self.second_name)
@@ -54,19 +71,15 @@ class Profile(models.Model):
     worker_type = models.CharField('Должность', max_length=50, default='NULL', blank=True, null=True)
     first_name = models.CharField('Имя', max_length=50, blank=True, null=True)
     second_name = models.CharField('Фамилия', max_length=50, blank=True, null=True)
-    taked_tasks_qty = models.PositiveIntegerField('Взято заданий', default=0, blank=True, null=True)
-    u_individual_task = models.ManyToManyField(UTask, blank=True, related_name='related_utask')
 
     def __str__(self):
         return str(self.id)
 
-    '''Функция для изменения числа пользовательских задач'''
-
-    def save(self, *args, **kwargs):
-        profile_data = self.u_individual_task.aggregate(models.Count('id'))
-        self.taked_tasks_qty = profile_data['id__count']
-        print(profile_data)
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     profile_data = self.u_individual_task.aggregate(models.Count('id'))
+    #     self.taked_tasks_qty = profile_data['id__count']
+    #     print(profile_data)
+    #     super().save(*args, **kwargs)
 
     # def save(self, *args, **kwargs):
     # super().save(*args, **kwargs)

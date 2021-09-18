@@ -3,19 +3,19 @@
 
 {% block content %}
 
-<h3>HELLO</h3>
 
-
+    {% if work_card %}
         {% for i in work_card.all %}
-            {{ i.first_name }}
-            {{ i.second_name }}
+            <h3>Имя : {{ i.first_name }}</h3>
+            <h3>Фамилия : {{ i.second_name }}</h3>
         {% endfor %}
-
-    <form method="POST" action="{% url 'worker_card_add' %}" >
-        {{ form|crispy}}<br>
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success">Добавить</button>
-    </form>
+    {% else %}
+        <form method="POST" action="{% url 'worker_card_add' %}" >
+            {{ form|crispy}}<br>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </form>
+    {% endif %}
 
 
 {% endblock content %}
