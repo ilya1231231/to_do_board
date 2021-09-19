@@ -24,5 +24,13 @@ class TaskForm(ModelForm):
 class WorkerCardForm(forms.ModelForm):
     class Meta:
         model = Worker
-        fields = ('first_name', 'second_name')
-
+        fields = (
+            'first_name',
+            'second_name',
+            'last_name',
+            'birthday',
+            'birthday_place',
+            'foreign_languages',
+            'education',
+            'avatar'
+        )

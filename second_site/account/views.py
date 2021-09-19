@@ -13,7 +13,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/profile-board/')
+                    return HttpResponseRedirect('/worker-card/')
                 else:
                     return HttpResponse('Disabled account')
             else:

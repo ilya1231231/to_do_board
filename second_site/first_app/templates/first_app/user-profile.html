@@ -15,9 +15,11 @@
 {% endif %}
 
 {% if user.is_authenticated %}
-    <h1>Добро пожаловать ,{{ user_profile.first_name }}</h1>
-    <h3>Должность : {{ user_profile.worker_type }}</h3>
-    <h3>Взято заданий : {{ user_profile.related_profile.count }}</h3>
+    {% for item in worker_card.all %}
+        <h1>Добро пожаловать ,{{ item.first_name }}</h1>
+        <h3>Должность : {{ item.worker_type }}</h3>
+    {% endfor %}
+        <h3>Взято заданий : {{ user_profile.related_profile.count }}</h3>
     {% for i in us_tasks %}
         <div class="alert alert-success mt-3">
             <h3>{{ i.u_title }}</h3>

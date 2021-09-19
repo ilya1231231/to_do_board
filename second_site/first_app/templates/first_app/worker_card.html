@@ -1,15 +1,23 @@
 {% extends 'first_app/base.html'%}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
-
-
-    {% if work_card %}
-        {% for i in work_card.all %}
+    {% if worker_card %}
+        {% for i in worker_card.all %}
             <h3>Имя : {{ i.first_name }}</h3>
             <h3>Фамилия : {{ i.second_name }}</h3>
+            <h3>Отчество : {{ i.last_name }}</h3>
+            <h3>Дата рождения : {{ i.birthday }}</h3>
+            <h3>Место рождения : {{ i.birthday_place }}</h3>
+            <h3>Иностранные языки : {{ i.foreign_languages }}</h3>
+            <h3>Образование : {{ i.education }}</h3>
+            <div>
+                <img src="{{ i.avatar.url }}" height="350", width="auto">
+            </div>
         {% endfor %}
     {% else %}
+    <h3>Прежде, чем продолжить работу заполните форму карты работника</h3>
         <form method="POST" action="{% url 'worker_card_add' %}" >
             {{ form|crispy}}<br>
             {% csrf_token %}

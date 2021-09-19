@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import Task, Profile, UTask, Worker
 from django.views.generic import View
-from .mixins import ProfileMixin
+from .mixins import ProfileMixin, WorkerMixin
 from .forms import TaskForm, WorkerCardForm
 
 
@@ -38,19 +38,20 @@ def create(request):
     return render(request, 'first_app/create.html', context)
 
 
-class ShowBoardView(ProfileMixin, View):
+class ShowBoardView(WorkerMixin, ProfileMixin, View):
 
     def get(self, request, *args, **kwargs):
         tasks = Task.objects.all()  # функция для главной страницы показать сообщение
         user_name = Worker.objects.get(user=request.user)
-        return render(request, 'first_app/todoboard.html', {'tasks': tasks,'user_name':user_name })
+        return render(request, 'first_app/todoboard.html', {'tasks': tasks, 'user_name': user_name})
 
 
-class ProfileView(ProfileMixin, View):
+class ProfileView(WorkerMixin, ProfileMixin, View):
 
     def get(self, request, *args, **kwargs):
         us_tasks = UTask.objects.filter(profile=self.user_profile)
         context = {
+            'worker_card': self.worker_card,
             'user_profile': self.user_profile,
             'us_tasks': us_tasks
         }
@@ -58,7 +59,7 @@ class ProfileView(ProfileMixin, View):
         return render(request, 'first_app/user-profile.html', context)
 
 
-class TakeTodoItemView(ProfileMixin, View):
+class TakeTodoItemView(WorkerMixin, ProfileMixin, View):
 
     def get(self, request, *args, **kwargs):
         i = kwargs.get('i')
@@ -74,7 +75,7 @@ class TakeTodoItemView(ProfileMixin, View):
         return HttpResponseRedirect('/profile-board/')
 
 
-class DeleteTaskUserView(ProfileMixin, View):
+class DeleteTaskUserView(WorkerMixin, ProfileMixin, View):
 
     def get(self, request, *args, **kwargs):
         i = kwargs.get('i')
@@ -85,12 +86,11 @@ class DeleteTaskUserView(ProfileMixin, View):
         return HttpResponseRedirect('/profile-board/')
 
 
-class WorkerCardView(ProfileMixin, View):
+class WorkerCardView(WorkerMixin, ProfileMixin, View):
     def get(self, request, *args, **kwargs):
         form = WorkerCardForm
-        work_card = Worker.objects.filter(user=request.user)
         context = {
-            'work_card': work_card,
+            'worker_card': self.worker_card,
             'form': form
         }
         current_user = request.user
@@ -102,9 +102,9 @@ class WorkerCardView(ProfileMixin, View):
         print(current_user.id)
 
 
-class WorkerCardAdd(ProfileMixin, View):
+class WorkerCardAdd(WorkerMixin, ProfileMixin, View):
     def post(self, request, *args, **kwargs):
-        form = WorkerCardForm(request.POST or None)
+        form = WorkerCardForm(request.POST, request.FILES)
         current_user = request.user
         if form.is_valid():
             work_card = form.save(commit=False)

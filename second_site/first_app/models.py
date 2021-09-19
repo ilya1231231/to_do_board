@@ -27,7 +27,11 @@ class Worker(models.Model):
     birthday = models.DateTimeField(verbose_name='Дата рождения', default=timezone.now)
     birthday_place = models.CharField('Место рождения', max_length=100, blank=True, null=True)
     foreign_languages = models.CharField('Иностранные языки', max_length=1024, blank=True, null=True)
-    education = models.CharField('Образование', choices=EDUCATION_CHOICES, default=EDUCATION_INCOMPLETE_HIGH)
+    education = models.CharField(
+        'Образование', max_length=160, choices=EDUCATION_CHOICES, default=EDUCATION_INCOMPLETE_HIGH
+    )
+    worker_type = models.CharField('Должность', max_length=50, default='появится чуть позже', blank=True, null=True)
+    avatar = models.ImageField('Аватар', upload_to='static/avatars', blank=True, null=True)
 
     def __str__(self):
         return 'Работник: {} {}'.format(self.first_name, self.second_name)
@@ -67,10 +71,7 @@ class UTask(models.Model):
 class Profile(models.Model):
     '''Профиль пользователя'''
     owner = models.OneToOneField('Worker', null=True, verbose_name='Владелец профиля', on_delete=models.CASCADE)
-    avatar = models.ImageField('Аватар', upload_to='profile/', blank=True, null=True)
-    worker_type = models.CharField('Должность', max_length=50, default='NULL', blank=True, null=True)
-    first_name = models.CharField('Имя', max_length=50, blank=True, null=True)
-    second_name = models.CharField('Фамилия', max_length=50, blank=True, null=True)
+
 
     def __str__(self):
         return str(self.id)

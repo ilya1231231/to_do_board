@@ -12,3 +12,13 @@ class ProfileMixin(View):
 
 
         return super().dispatch(request, *args, **kwargs)
+
+class WorkerMixin(View):
+    ''' Миксин для для аутентификации пользователя '''
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            worker_card = Worker.objects.filter(user=request.user)
+        self.worker_card = worker_card
+
+
+        return super().dispatch(request, *args, **kwargs)

@@ -11,5 +11,5 @@ admin.site.register(Worker)
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     '''Профиль пользователя'''
-    list_display = ('owner', 'first_name', 'second_name')
+    list_display = ('owner',)
 
